@@ -12,13 +12,22 @@
     <section>
         <fieldset>
             <legend>Ubicación del Predio</legend>
+                <label>Dirección</label><label>Manzana</label><label>Lote</label><label>Tipo Via</label><label>Nombre Via</label><label>Número</label><br>
+                <label>{{dic_ubi["dire"]}}</label>
+                <label>{{dic_ubi["mzn"]}}</label>
+                <label>{{dic_ubi["lte"]}}</label>
+                <label>{{dic_ubi["tvia"]}}</label>
+                <label>{{dic_ubi["nvia"]}}</label>
+                <label>{{dic_ubi["nro"]}}</label>
+            
     	</fieldset>
 	</section>
     <fieldset>
         <legend>Datos del Contribuyente</legend>
-            <label>Nombre </label>
-        
-        
+            <label>Nombre </label><br>
+            %for numero in propi:
+                <label>{{numero}}</label><br>
+            %end
     </fieldset>
     
     <div id="slider">

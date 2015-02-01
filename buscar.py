@@ -1,5 +1,6 @@
 import pymongo
 import string
+import sys
 
 __author__ = 'rodolfo'
 
@@ -10,13 +11,18 @@ class Buscar:
         self.catastro = self.db.catastro
 
     def buscar_cod_contri(self, cod_contri):
-        codigo = None
-        try:
-            codigo = self.catastro.find({'COD_CONTRIBUYENTE': cod_contri})
-        except:
-            print "Hubo un error en la busqueda por codigo contribuyente"
+        """
 
-        if codigo is None:
-            print "Codigo no se encuentra en la Base de Datos"
+        :rtype : Envia un diccionario con la busqueda por codigo de contribuyente
+        """
+        codigo = None
+        pregunta = {'COD_CONTRIBUYENTE':int(cod_contri)}
+        try:
+            codigo = self.catastro.find(pregunta)
+        except:
+            print "Hubo un error en la busqueda por codigo contribuyente",sys.exc_info()[0]
+
+        if codigo.count() == 0:
+           # print "Codigo no se encuentra en la Base de Datos"
             return None
         return codigo

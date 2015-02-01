@@ -2,13 +2,19 @@
 
 html {
   border-top: 5px solid #fff;
-  color: #2a2a2a;
+  color: #000465;
+  background: #98a2a7;
+  text-shadow: 2px 2px #c1c1c1;
 }
 
 html, body {
   margin: 0;
   padding: 0;
   font-family: 'Open Sans';
+}
+
+#buscar{
+    box-shadow: 10px 10px 5px #eaa1a1;
 }
 
 h1 {

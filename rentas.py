@@ -1,6 +1,7 @@
 import pymongo
 import bottle
 import buscar
+import os
 
 __author__ = 'rodolfo'
 
@@ -35,7 +36,9 @@ def busca_codigo_contri():
         #redire_plantilla(dato)
     dic_ubi = ubicacion(dato)
     propi = propietarios(dato)
-    return bottle.template('plantilla.tpl',{"dic_ubi":dic_ubi,"propi":propi})
+    image = imagenes(dato)
+    print image
+    return bottle.template('plantilla.tpl',{"dic_ubi":dic_ubi,"propi":propi,"foto":image})
     #bottle.redirect("plantilla")
 
 """@bottle.get("/plantilla")
@@ -44,8 +47,22 @@ def plantilla():
 
 def imagenes(dato):
     aux = str(dato[0]["ID_LOTE"])
-    img = aux[5:13]
-    print img
+    imag = aux[5:13]
+    ruta = os.path.abspath("img") +"/"+ imag +".JPG"
+    array=[]
+    if os.path.exists(ruta):
+        parseo = "img/"+imag+".JPG"
+        array.append(parseo)
+        return array
+    else:
+        for i in range(2):
+            ruta = os.path.abspath("img")+"/"+imag+"-"+str(i+1)+".JPG"
+            if os.path.exists(ruta):
+                parseo = "img/"+imag+"-"+str(i+1)+".JPG"
+                array.append(parseo)
+            else:
+                print "No hay imagenes para esta direccion"
+        return array
 
 def propietarios(dato):
     cont = dato.count()

@@ -34,10 +34,11 @@
       <a href="#" class="control_next">>></a>
       <a href="#" class="control_prev"><</a>
       <ul>
-        <li> <img src="img/05023001-1.JPG" height="500" width="600"></li>
-        <li> <img src="img/05023001-2.JPG" height="500" width="600"></li>
-        <li>SLIDE 3</li>
-        <li style="background: #aaa;">SLIDE 4</li>
+          %if foto != None:
+              %for fotos in foto:
+                <li> <img src={{fotos}} height="500" width="600"></li>
+              %end
+          %end
       </ul>
     </div>
     

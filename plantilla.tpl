@@ -13,12 +13,10 @@
         <fieldset>
             <legend>Ubicación del Predio</legend>
                 <label>Dirección</label><label>Manzana</label><label>Lote</label><label>Tipo Via</label><label>Nombre Via</label><label>Número</label><br>
-                <label>{{dic_ubi["dire"]}}</label>
-                <label>{{dic_ubi["mzn"]}}</label>
-                <label>{{dic_ubi["lte"]}}</label>
-                <label>{{dic_ubi["tvia"]}}</label>
-                <label>{{dic_ubi["nvia"]}}</label>
-                <label>{{dic_ubi["nro"]}}</label>
+     
+                %for ubi in dic_ubi:
+                    <label>{{ubi}}</label>
+                %end
             
     	</fieldset>
 	</section>
@@ -29,17 +27,36 @@
                 <label>{{numero}}</label><br>
             %end
     </fieldset>
-    
-    <div id="slider">
-      <a href="#" class="control_next">>></a>
-      <a href="#" class="control_prev"><</a>
-      <ul>
-          %if foto != None:
-              %for fotos in foto:
-                <li> <img src={{fotos}} height="500" width="600"></li>
-              %end
-          %end
-      </ul>
+    <div id="contenedor">
+        <div id="contenido">
+            <fieldset>
+                <legend>Construcción</legend>
+                <label>Piso</label><label>Area</label><label>Categorias</label><br>
+                %for numero in pisos:
+                    %for piso in numero:
+                        <label>{{piso}}</label>
+                    %end
+                    <br>
+                %end
+            </fieldset>
+        </div>
+        %if foto != []:
+        <div id="slider">
+          <a href="#" class="control_next">>></a>
+          <a href="#" class="control_prev"><</a>
+          <ul>
+                %if conta == 1:
+                    <li><img src={{foto[0]}} height="500" width="600"></li>
+                    <li>No hay otra imagen</li>
+                %else:        
+                  %for fotos in foto:
+                    <li> <img src={{fotos}} height="500" width="600"></li>
+                  %end
+                %end
+
+          </ul>
+        </div>
+        %end
     </div>
-    
+
 </body>

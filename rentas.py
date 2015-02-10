@@ -74,24 +74,25 @@ def propietarios(dato):
     cont = dato.count()
     contribu = []
     name = dato[0]["APE_PATERNO"] + " " + dato[0]["APE_MATERNO"] + " " + dato[0]["NOMBRES"]
+    contribu.append(name)
     for i in range(cont):
         nuevo = dato[i]["APE_PATERNO"] + " " + dato[i]["APE_MATERNO"] + " " + dato[i]["NOMBRES"]
-        if name != nuevo:
-            contribu.append(name)
+        if name in contribu:
             name = nuevo
-    contribu.append(name)
+        else:
+            contribu.append(name)
     return contribu
 
 
 def ubicacion(dato):
-    """ubi={"dire":dato[0]["NOM_HAB_URBA"],
+    ubi={"dire":dato[0]["NOM_HAB_URBA"],
     "mzn":dato[0]["MZNA_MUNI"],
     "lte":dato[0]["LOTE_MUNI"],
     "tvia":dato[0]["TIP_VIA"],
     "nvia":dato[0]["NOM_VIA"],
-    "nro":dato[0]["NROS_MUNI"]}"""
-    ubi = dato[0]["NOM_HAB_URBA"], dato[0]["MZNA_MUNI"], dato[0]["LOTE_MUNI"], dato[0]["TIP_VIA"], \
-          dato[0]["NOM_VIA"], dato[0]["NROS_MUNI"]
+    "nro":dato[0]["NROS_MUNI"]}
+    """ubi = dato[0]["NOM_HAB_URBA"], dato[0]["MZNA_MUNI"], dato[0]["LOTE_MUNI"], dato[0]["TIP_VIA"], \
+          dato[0]["NOM_VIA"], dato[0]["NROS_MUNI"]"""
     return ubi
 
 
@@ -107,7 +108,7 @@ def pisos(dato):
         nro_pisos[conta] = aux
         print nro_pisos[conta]
         conta += 1
-
+    nro_pisos.sort()
     return nro_pisos
 
 

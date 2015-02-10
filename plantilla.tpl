@@ -5,6 +5,8 @@
   <meta charset="UTF-8">
   <title>DECLARACION JURADA</title>
   <link rel="stylesheet" href="css/style.css" media="screen" type="text/css" />
+    <link rel="stylesheet" href="css/table.css" media="screen" type="text/css" />
+
   <script src="js/jquery.min.js"></script>
   <script src="js/slider.js"></script>
 </head>
@@ -12,32 +14,58 @@
     <section>
         <fieldset>
             <legend>Ubicación del Predio</legend>
-                <label>Dirección</label><label>Manzana</label><label>Lote</label><label>Tipo Via</label><label>Nombre Via</label><label>Número</label><br>
-     
-                %for ubi in dic_ubi:
-                    <label>{{ubi}}</label>
-                %end
-            
+            <table class="rwd-table">
+                  <tr>
+                    <th>Dirección</th>
+                    <th>Manzana</th>
+                    <th>Lote</th>
+                    <th>Tipo Via</th>
+                    <th>Nombre Via</th>
+                    <th>Número</th>
+                  </tr>
+                  <tr>
+                    <td data-th="Dirección">{{dic_ubi["dire"]}}</td>
+                    <td data-th="Manzana">{{dic_ubi["mzn"]}}</td>
+                    <td data-th="Lote">{{dic_ubi["lte"]}}</td>
+                    <td data-th="Tipo Via">{{dic_ubi["tvia"]}}</td>
+                    <td data-th="Nombre Via">{{dic_ubi["nvia"]}}</td>
+                    <td data-th="Número">{{dic_ubi["nro"]}}</td>
+                      
+                  </tr>
+            </table>            
     	</fieldset>
 	</section>
     <fieldset>
         <legend>Datos del Contribuyente</legend>
-            <label>Nombre </label><br>
+         <table class="rwd-table">
+            <tr>
+                <th>Nombre</th>
+            </tr>
             %for numero in propi:
-                <label>{{numero}}</label><br>
-            %end
+             <tr>
+                <td data-th="Nombre">{{numero}}</td>
+            </tr>
+             %end
+        </table>  
     </fieldset>
     <div id="contenedor">
         <div id="contenido">
             <fieldset>
                 <legend>Construcción</legend>
-                <label>Piso</label><label>Area</label><label>Categorias</label><br>
+                <table class="rwd-table">
+                  <tr>
+                    <th>Piso</th>
+                    <th>Area</th>
+                    <th></th>
+                  </tr>
                 %for numero in pisos:
+                  <tr>
                     %for piso in numero:
-                        <label>{{piso}}</label>
+                    <td data-th="Piso">{{piso}}</td>
                     %end
-                    <br>
+                  </tr>
                 %end
+            </table>            
             </fieldset>
         </div>
         %if foto != []:

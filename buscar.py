@@ -18,7 +18,7 @@ class Buscar:
         codigo = None
         pregunta = {'COD_CONTRIBUYENTE':int(cod_contri)}
         try:
-            codigo = self.catastro.find(pregunta)
+            codigo = self.catastro.find(pregunta).sort('NRO_PISO',pymongo.ASCENDING)
         except:
             print "Hubo un error en la busqueda por codigo contribuyente",sys.exc_info()[0]
 

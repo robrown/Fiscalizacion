@@ -24,16 +24,16 @@
 		 <form method="post" action="/codigo" >
 		 	<fieldset>
     		 <legend>Opciones de Busqueda</legend>
-			 <input type="radio" name="codigo" formaction="/codigo" value="{{CodContri}}" />Codigo Contribuyente
+			 <input id="radio" type="radio" name="codigo" formaction="/codigo" value="{{CodContri}}" /> Codigo Contribuyente
 			 <input type="text" name="CodContri" class="placeholder" onkeypress="return justNumbers(event);" placeholder="Ejm. 311245" maxlength="6" pattern="[0-9]{6}"><br>
-			 <input type="radio" name="codigo" value="NomContri"/>Nombre Contribuyente
+			 <input id="radio" type="radio" name="codigo" value="NomContri"/> Nombre Contribuyente
 			 <input type="text" name="NomContri" class="placeholder" placeholder="Nombre">
 			 <input type="text" name="NomContri" class="placeholder" placeholder="Primer Apellido">
 			 <input type="text" name="NomContri" class="placeholder" placeholder="Segundo Apellido"><br>
-			 <input type="radio" name="codigo" value="CodCatas"/>Codigo Catastral
+			 <input id="radio"type="radio" name="codigo" value="CodCatas"/> Codigo Catastral
 			 <input type="text" name="CodCatas" class="placeholder" onkeypress="return justNumbers(event);" placeholder="Ejm. 04012601001005" maxlength="14" pattern="[0-9]{14}"><br>	
 			 <br>
-			 <input type="submit" name="BUSCAR" value="BUSQUEDA">
+			 <input id="busqueda" type="submit" name="BUSCAR" value="BUSQUEDA">
 			</fieldset>
 		</form>
 	</section>

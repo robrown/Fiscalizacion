@@ -56,6 +56,7 @@
                   <tr>
                     <th>Piso</th>
                     <th>Area</th>
+                    <th>Area Total</th>
                     <th></th>
                   </tr>
                 %for numero in pisos:

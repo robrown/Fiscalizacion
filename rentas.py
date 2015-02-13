@@ -53,6 +53,13 @@ def plantilla():
 def imagenes(dato):
     aux = str(dato[0]["ID_LOTE"])
     imag = aux[5:13]
+    """sector = imag[0:2]
+    manzana = imag[2:5]
+    print sector,manzana
+    sector = "SECTOR" + sector
+    print sector
+    nuevaruta=os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', sector))
+    print nuevaruta"""
     ruta = os.path.abspath("img") + "/" + imag + ".JPG"
     array = []
     if os.path.exists(ruta):
@@ -60,7 +67,7 @@ def imagenes(dato):
         array.append(parseo)
         return array
     else:
-        for i in range(2):
+        for i in range(3):
             ruta = os.path.abspath("img") + "/" + imag + "-" + str(i + 1) + ".JPG"
             if os.path.exists(ruta):
                 parseo = "img/" + imag + "-" + str(i + 1) + ".JPG"
@@ -101,7 +108,7 @@ def pisos(dato):
     aux = []
     conta = 0
     for pis in dato:
-        aux = pis["NRO_PISO"], pis["CONSTRUCCIONES_1_AREA_VERIFICADA"], pis["ESTRU_MURO_COL"], pis["ESTRU_TECHO"], \
+        aux = pis["NRO_PISO"], pis["CONSTRUCCIONES_1_AREA_VERIFICADA"],pis["FICHAS_INDIVIDUALES_AREA_VERIFICADA"], pis["ESTRU_MURO_COL"], pis["ESTRU_TECHO"], \
               pis["ACABA_PISO"], pis["ACABA_PUERTA_VEN"], pis["ACABA_REVEST"], pis["ACABA_BANO"], pis[
             "INST_ELECT_SANITA"]
         aux = list(aux)

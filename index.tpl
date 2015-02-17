@@ -18,22 +18,33 @@
 	    }
 	</script>
     <script type="text/javascript">
-        $('#validar-codigo').click(function() {
-            //Se verifica si alguno de los radios esta seleccionado
-            if ($('input[name="codigo"]').is(':checked')) {
-                alert('Campo correcto');
-            }
-            else {
-                alert('Se debe seleccionar un idioma');
-            }
-        });
-    </script>
-    <script type="text/javascript">
         $(document).ready(function()
         {
+            $('input[type="text"]').hide();
             $('input[name="codigo"]').click(function () {    
-                alert("El valor es: "+ $('input:radio[name=codigo]:checked').val());
-                alert($(this.).val());
+                switch ($('input:radio[name=codigo]:checked').val()){
+                    case "codigoContri":
+                        $('#CodContri').show().focus();
+                        $('#CodCatas').hide();
+                        $('#NomContri').hide();
+                        $('#NomContri1').hide();
+                        $('#NomContri2').hide();
+                        break;
+                    case "nombreContri":
+                        $('#NomContri').show().focus();
+                        $('#NomContri1').show();
+                        $('#NomContri2').show();
+                        $('#CodContri').hide();
+                        $('#CodCatas').hide();
+                        break;
+                    case "CodCatas":
+                        $('#CodCatas').show().focus();
+                        $('#NomContri1').hide();
+                        $('#NomContri2').hide();
+                        $('#CodContri').hide();
+                        $('#NomContri').hide();
+                        break;
+                }         
             });
         });
 </script>
@@ -41,17 +52,17 @@
 
 <body>
     <section>
-		 <form method="post" action="/codigo" >
+		 <form method="post" action="/codigo">
 		 	<fieldset>
     		 <legend>Opciones de Busqueda</legend>
-			 <input id="radio" type="radio" name="codigo" formaction="/codigo" val="codigoContri" /> Codigo Contribuyente
-			 <input type="text" name="CodContri" class="placeholder" onkeypress="return justNumbers(event);" placeholder="Ejm. 311245" maxlength="6" pattern="[0-9]{6}"><br>
-			 <input id="radio" type="radio" name="codigo" val="nombreContri"/> Nombre Contribuyente
-			 <input type="text" name="NomContri" class="placeholder" placeholder="Nombre">
-			 <input type="text" name="NomContri" class="placeholder" placeholder="Primer Apellido">
-			 <input type="text" name="NomContri" class="placeholder" placeholder="Segundo Apellido"><br>
-			 <input id="radio"type="radio" name="codigo" val="CodCatas"/> Codigo Catastral
-			 <input type="text" name="CodCatas" class="placeholder" onkeypress="return justNumbers(event);" placeholder="Ejm. 04012601001005" maxlength="14" pattern="[0-9]{14}"><br>
+			 <input id="radio" type="radio" name="codigo"  value="codigoContri" /> Codigo Contribuyente
+			 <input type="text" id="CodContri" class="placeholder" onkeypress="return justNumbers(event);" placeholder="Ejm. 311245" maxlength="6" pattern="[0-9]{6}" name="CodContri"><br>
+			 <input id="radio" type="radio" name="codigo" value="nombreContri"/> Nombre Contribuyente
+			 <input type="text" id="NomContri" class="placeholder" placeholder="Nombre">
+			 <input type="text" id="NomContri1" class="placeholder" placeholder="Primer Apellido">
+			 <input type="text" id="NomContri2" class="placeholder" placeholder="Segundo Apellido"><br>
+			 <input id="radio" type="radio" name="codigo" value="CodCatas"/> Codigo Catastral
+			 <input type="text" id="CodCatas" class="placeholder" onkeypress="return justNumbers(event);" placeholder=" 04012601001005" maxlength="14" pattern="[0-9]{14}" name="CodCatas"><br>
 			 <br>
 			 <input id="busqueda" type="submit" name="BUSCAR" value="BUSQUEDA">
 			</fieldset>

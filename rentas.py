@@ -8,12 +8,13 @@ __author__ = 'rodolfo'
 
 @bottle.route('/')
 def index():
-    return bottle.template('index.tpl', dict(CodContri=""))
+    return bottle.template('index.tpl')
 
 
 @bottle.post('/codigo')
 def busca_codigo_contri():
     cod = bottle.request.forms.get("CodContri")
+    #cat = bottle.request.forms.get("CodCatas")
     if cod == "":
         return '''
 			<script type="text/javascript">
@@ -45,10 +46,26 @@ def busca_codigo_contri():
     # bottle.redirect("plantilla")
 
 
-"""@bottle.get("/plantilla")
-def plantilla():
-    return bottle.template('plantilla.tpl')"""
-
+@bottle.post('/catastro')
+def busca_codigo_catastro():
+    cod = bottle.request.forms.get("CodCatastro")
+    if cod == "":
+        return '''
+			<script type="text/javascript">
+				alert("No ha digitado ningun codigo");
+				location.href='/';
+			</script>
+			'''
+    else:
+        print cod
+        dato = busca.buscar_cod_contri(cod)
+        if dato == None:
+            return '''
+			<script type="text/javascript">
+				alert("No existe un contribuyente con ese codigo");
+				location.href='/';
+			</script>
+			'''
 
 def imagenes(dato):
     aux = str(dato[0]["ID_LOTE"])
@@ -113,7 +130,7 @@ def pisos(dato):
             "INST_ELECT_SANITA"]
         aux = list(aux)
         nro_pisos[conta] = aux
-        print nro_pisos[conta]
+        #print nro_pisos[conta]
         conta += 1
     nro_pisos.sort()
     return nro_pisos

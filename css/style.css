@@ -64,7 +64,7 @@ h1 {
   position: relative;
   margin: 0;
   padding: 0;
-  height: 1000px;
+  height: 800px;
   list-style: none;
 }
 
@@ -74,8 +74,8 @@ h1 {
   float: left;
   margin: 0;
   padding: 0;
-  width: 600px;
-  height: 500px;
+  width: 500px;
+  height: 400px;
   background: #838080;
   text-align: center;
   line-height: 300px;

@@ -47,24 +47,41 @@
                 }         
             });
         });
-</script>
+    </script>
+    <script type="text/javascript">
+        function enviar()
+        {
+            alert("Estoy axa");
+            switch ($('input:radio[name=codigo]:checked').val()){
+                    case "codigoContri":
+                        document.getElementById("formulario").action = "/codigo";
+                        document.getElementById("formulario").submit();
+                        break;
+                    case "nombreContri":
+                        $(document).getElementById("formulario").action = "/nombre";
+                        $(document).getElementById("formulario").submit();
+                        break;
+            }
+        }
+    
+    </script>
 </head>
 
 <body>
     <section>
-		 <form method="post" action="/codigo">
+		 <form method="post" action="" id="formulario">
 		 	<fieldset>
     		 <legend>Opciones de Busqueda</legend>
 			 <input id="radio" type="radio" name="codigo"  value="codigoContri" /> Codigo Contribuyente
 			 <input type="text" id="CodContri" class="placeholder" onkeypress="return justNumbers(event);" placeholder="Ejm. 311245" maxlength="6" pattern="[0-9]{6}" name="CodContri"><br>
 			 <input id="radio" type="radio" name="codigo" value="nombreContri"/> Nombre Contribuyente
-			 <input type="text" id="NomContri" class="placeholder" placeholder="Nombre">
-			 <input type="text" id="NomContri1" class="placeholder" placeholder="Primer Apellido">
-			 <input type="text" id="NomContri2" class="placeholder" placeholder="Segundo Apellido"><br>
+			 <input type="text" id="NomContri" class="placeholder" placeholder="Nombre" name="nombre">
+			 <input type="text" id="NomContri1" class="placeholder" placeholder="Apellido Paterno" name="paterno">
+			 <input type="text" id="NomContri2" class="placeholder" placeholder="Apellido Materno" name="materno"><br>
 			 <input id="radio" type="radio" name="codigo" value="CodCatas"/> Codigo Catastral
 			 <input type="text" id="CodCatas" class="placeholder" onkeypress="return justNumbers(event);" placeholder=" 04012601001005" maxlength="14" pattern="[0-9]{14}" name="CodCatas"><br>
 			 <br>
-			 <input id="busqueda" type="submit" name="BUSCAR" value="BUSQUEDA">
+			 <input id="busqueda" type="submit" name="BUSCAR" value="BUSQUEDA" onclick=javascript:enviar();>
 			</fieldset>
 		</form>
 	</section>

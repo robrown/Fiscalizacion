@@ -46,7 +46,7 @@ def busca_codigo_contri():
     # bottle.redirect("plantilla")
 
 
-@bottle.post('/catastro')
+"""@bottle.post('/catastro')
 def busca_codigo_catastro():
     cod = bottle.request.forms.get("CodCatastro")
     if cod == "":
@@ -66,6 +66,36 @@ def busca_codigo_catastro():
 				location.href='/';
 			</script>
 			'''
+"""
+@bottle.post('/nombre')
+def busca_codigo_nombre():
+    ape_pater = bottle.request.forms.get("paterno")
+    ape_mater = bottle.request.forms.get("materno")
+    nombre = bottle.request.forms.get("nombre")
+    if ape_pater == "" or ape_mater == "" or nombre == "":
+        return '''
+			<script type="text/javascript">
+				alert("No ha digitado ningun codigo");
+				location.href='/';
+			</script>
+			'''
+    else:
+        dato = busca.buscar_nombre(ape_pater,ape_mater,nombre)
+        if dato == None:
+            return '''
+			<script type="text/javascript">
+				alert("No existe un contribuynte con ese codigo");
+				location.href='/';
+			</script>
+			'''
+    dic_ubi = ubicacion(dato)
+    propi = propietarios(dato)
+    image = imagenes(dato)
+    cont_img = len(image)
+    total_pisos = pisos(dato)
+    return bottle.template('plantilla.tpl',
+                           {"dic_ubi": dic_ubi, "propi": propi, "foto": image, "conta": cont_img, "pisos": total_pisos})
+
 
 def imagenes(dato):
     aux = str(dato[0]["ID_LOTE"])

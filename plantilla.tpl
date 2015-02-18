@@ -75,11 +75,11 @@
           <a href="#" class="control_prev"><</a>
           <ul>
                 %if conta == 1:
-                    <li><img src={{foto[0]}} height="500" width="600"></li>
+                    <li><img src={{foto[0]}} height="400" width="500"></li>
                     <li>No hay otra imagen</li>
                 %else:        
                   %for fotos in foto:
-                    <li> <img src={{fotos}} height="500" width="600"></li>
+                    <li> <img src={{fotos}} height="400" width="500"></li>
                   %end
                 %end
 

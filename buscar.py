@@ -26,3 +26,24 @@ class Buscar:
            # print "Codigo no se encuentra en la Base de Datos"
             return None
         return codigo
+
+    def buscar_nombre(self,ape_pater,ape_mater,nombre):
+        ape_pater = ape_pater.upper()
+        ape_mater = ape_mater.upper()
+        nombres = nombre.upper()
+        codigo = None
+
+        pregunta = {'APE_PATERNO':ape_pater,'APE_MATERNO':ape_mater}
+        try:
+            codigo = self.catastro.find(pregunta)
+        except:
+            print "Hubo un error en la busqueda por nombre",sys.exc_info()[0]
+
+        if codigo.count() == 0:
+            # print "Codigo no se encuentra en la Base de Datos"
+            return None
+        return codigo
+
+
+
+

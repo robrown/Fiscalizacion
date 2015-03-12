@@ -44,6 +44,23 @@ class Buscar:
             return None
         return codigo
 
+    def buscar_cod_catastro(self, cod_catas):
+        """
+
+        :rtype : Envia un diccionario con la busqueda por codigo CATASTRAL
+        """
+        codigo = None
+        pregunta = {'ID_LOTE':int(cod_catas)}
+        try:
+            codigo = self.catastro.find(pregunta).sort('NRO_PISO',pymongo.ASCENDING)
+        except:
+            print "Hubo un error en la busqueda por codigo contribuyente",sys.exc_info()[0]
+
+        if codigo.count() == 0:
+           # print "Codigo no se encuentra en la Base de Datos"
+            return None
+        return codigo
+
 
 
 

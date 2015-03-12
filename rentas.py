@@ -46,9 +46,9 @@ def busca_codigo_contri():
     # bottle.redirect("plantilla")
 
 
-"""@bottle.post('/catastro')
+@bottle.post('/catastro')
 def busca_codigo_catastro():
-    cod = bottle.request.forms.get("CodCatastro")
+    cod = bottle.request.forms.get("CodCatas")
     if cod == "":
         return '''
 			<script type="text/javascript">
@@ -58,7 +58,7 @@ def busca_codigo_catastro():
 			'''
     else:
         print cod
-        dato = busca.buscar_cod_contri(cod)
+        dato = busca.buscar_cod_catastro(cod)
         if dato == None:
             return '''
 			<script type="text/javascript">
@@ -66,7 +66,7 @@ def busca_codigo_catastro():
 				location.href='/';
 			</script>
 			'''
-"""
+
 @bottle.post('/nombre')
 def busca_codigo_nombre():
     ape_pater = bottle.request.forms.get("paterno")
@@ -75,7 +75,7 @@ def busca_codigo_nombre():
     if ape_pater == "" or ape_mater == "" or nombre == "":
         return '''
 			<script type="text/javascript">
-				alert("No ha digitado ningun codigo");
+				alert("No ha digitado bien el nombre");
 				location.href='/';
 			</script>
 			'''
@@ -84,10 +84,11 @@ def busca_codigo_nombre():
         if dato == None:
             return '''
 			<script type="text/javascript">
-				alert("No existe un contribuynte con ese codigo");
+				alert("No existe un contribuyente con ese nombre");
 				location.href='/';
 			</script>
 			'''
+    print dato.count()
     dic_ubi = ubicacion(dato)
     propi = propietarios(dato)
     image = imagenes(dato)
@@ -171,21 +172,21 @@ from bottle import static_file
 
 @bottle.route('/css/<filename>')
 def server_static(filename):
-    # return static_file(filename, root='/home/rodolfo/PycharmProjects/Fiscalizacion/css')
+    return static_file(filename, root='/home/rodolfo/PycharmProjects/Fiscalizacion/css')
     # Mac
-    return static_file(filename, root='/Users/iServidor/Fiscalizacion/css')
+    #return static_file(filename, root='/Users/iServidor/Fiscalizacion/css')
 
 
 @bottle.route('/img/<filename>')
 def server_static(filename):
-    # return static_file(filename, root='/home/rodolfo/PycharmProjects/Fiscalizacion/img')
-    return static_file(filename, root='/Users/iServidor/Fiscalizacion/img')
+    return static_file(filename, root='/home/rodolfo/PycharmProjects/Fiscalizacion/img')
+    #return static_file(filename, root='/Users/iServidor/Fiscalizacion/img')
 
 
 @bottle.route('/js/<filename>')
 def server_static(filename):
-    # return static_file(filename, root='/home/rodolfo/PycharmProjects/Fiscalizacion/js')
-    return static_file(filename, root='/Users/iServidor/Fiscalizacion/js')
+    return static_file(filename, root='/home/rodolfo/PycharmProjects/Fiscalizacion/js')
+    #return static_file(filename, root='/Users/iServidor/Fiscalizacion/js')
 
 
 connection_string = "mongodb://localhost"

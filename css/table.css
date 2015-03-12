@@ -1,7 +1,7 @@
 @import "http://fonts.googleapis.com/css?family=Montserrat:300,400,700";
 .rwd-table {
-  margin: 1em 0;
-  min-width: 300px;
+  margin: 0.5em 0;
+  min-width: 150px;
 }
 .rwd-table tr {
   border-top: 1px solid #ddd;
@@ -22,7 +22,7 @@
 .rwd-table td:before {
   content: attr(data-th) ": ";
   font-weight: bold;
-  width: 6.5em;
+  width: 3.5em;
   display: inline-block;
 }
 @media (min-width: 480px) {
@@ -47,7 +47,7 @@
 }
 
 body {
-  padding: 0 2em;
+  padding: 0 1em;
   font-family: Montserrat, sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -71,11 +71,11 @@ h1 {
   border-color: #46627f;
 }
 .rwd-table th, .rwd-table td {
-  margin: .5em 1em;
+  margin: .2em .5em;
 }
 @media (min-width: 480px) {
   .rwd-table th, .rwd-table td {
-    padding: 1em !important;
+    padding: .5em !important;
   }
 }
 .rwd-table th, .rwd-table td:before {

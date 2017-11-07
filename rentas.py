@@ -2,6 +2,7 @@ import pymongo
 import bottle
 import buscar
 import os
+from bson.json_util import loads
 
 __author__ = 'rodolfo'
 
@@ -66,6 +67,13 @@ def busca_codigo_catastro():
 				location.href='/';
 			</script>
 			'''
+    dic_ubi = ubicacion(dato)
+    propi = propietarios(dato)
+    image = imagenes(dato)
+    cont_img = len(image)
+    total_pisos = pisos(dato)
+    return bottle.template('plantilla.tpl',
+                           {"dic_ubi": dic_ubi, "propi": propi, "foto": image, "conta": cont_img, "pisos": total_pisos})
 
 @bottle.post('/nombre')
 def busca_codigo_nombre():
@@ -97,6 +105,47 @@ def busca_codigo_nombre():
     return bottle.template('plantilla.tpl',
                            {"dic_ubi": dic_ubi, "propi": propi, "foto": image, "conta": cont_img, "pisos": total_pisos})
 
+@bottle.post('/direccion')
+def busca_direccion():
+    direccion = bottle.request.forms.get("Direc")
+    dato = busca.buscar_direccion(direccion)
+    if dato == None:
+        return '''
+			<script type="text/javascript">
+				alert("No existe");
+				location.href='/';
+			</script>
+			'''
+    usuarios = usuario(dato)
+    return bottle.template('direccion.tpl', {"dato": usuarios})
+
+@bottle.post('/verifica')
+def busca_codigo_nombre():
+    ape_pater = bottle.request.forms.get("paterno")
+    ape_mater = bottle.request.forms.get("materno")
+    if ape_mater:
+        clave = busca.buscar_materno(ape_pater,ape_mater)
+        if clave == None:
+            return '''
+			<script type="text/javascript">
+				alert("No existe un contribuyente con ese nombre");
+				location.href='/';
+			</script>
+			'''
+        usuarios = usuario(clave)
+        return bottle.template('busqueda.tpl', {"dato": usuarios})
+    else:
+        clave = busca.buscar_paterno(ape_pater)
+        if clave == None:
+            return '''
+			<script type="text/javascript">
+				alert("No existe un contribuyente con ese nombre");
+				location.href='/';
+			</script>
+			'''
+        usuarios = usuario(clave)
+        return bottle.template('busqueda.tpl', {"dato": usuarios})
+
 
 def imagenes(dato):
     aux = str(dato[0]["ID_LOTE"])
@@ -108,22 +157,51 @@ def imagenes(dato):
     print sector
     nuevaruta=os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', sector))
     print nuevaruta"""
-    ruta = os.path.abspath("img") + "/" + imag + ".JPG"
-    array = []
-    if os.path.exists(ruta):
-        parseo = "img/" + imag + ".JPG"
-        array.append(parseo)
-        return array
+    ruta_may = os.path.abspath("img") + "/" + imag + ".JPG"
+    ruta_min = os.path.abspath("img") + "/" + imag + ".jpg"
+    array_min = []
+    array_may = []
+    if os.path.exists(ruta_may) or os.path.exists(ruta_min):
+        parseo_may = "img/" + imag + ".JPG"
+        parseo_min = "img/" + imag + ".jpg"
+        array_may.append(parseo_may)
+        array_min.append(parseo_min)
+        if os.path.exists(parseo_min):
+            return array_min
+        else:
+            return array_may
     else:
         for i in range(3):
-            ruta = os.path.abspath("img") + "/" + imag + "-" + str(i + 1) + ".JPG"
-            if os.path.exists(ruta):
-                parseo = "img/" + imag + "-" + str(i + 1) + ".JPG"
-                array.append(parseo)
+            #ruta = os.path.abspath("img") + "/" + imag + "_" + str(i + 1) + ".JPG"
+            ruta_may = os.path.abspath("img") + "/" + imag + "_" + str(i+1) + ".JPG"
+            ruta_min = os.path.abspath("img") + "/" + imag + "_" + str(i+1) + ".jpg"
+            if os.path.exists(ruta_may) or os.path.exists(ruta_min):
+                parseo_may = "img/" + imag + "_" + str(i + 1) + ".JPG"
+                parseo_min = "img/" + imag + "_" + str(i + 1) + ".jpg"
+                array_may.append(parseo_may)
+                array_min.append(parseo_min)
             else:
-                print "No hay imagenes para esta direccion"
-        return array
+                print "No hay imagenes para este contribuyente"
+        if os.path.exists(parseo_min):
+            return array_min
+        else:
+            return array_may
 
+def usuario(dato):
+    dato = loads(dato)
+    contribu = []
+    name = dato[0]
+    contribu.append(name)
+    for i in dato:
+        nuevo = i
+        if name in contribu:
+            name = nuevo
+        else:
+            contribu.append(name)
+    if not name in contribu:
+        contribu.append(name)
+    contribu.sort()
+    return contribu
 
 def propietarios(dato):
     cont = dato.count()
@@ -145,23 +223,49 @@ def ubicacion(dato):
     "lte":dato[0]["LOTE_MUNI"],
     "tvia":dato[0]["TIP_VIA"],
     "nvia":dato[0]["NOM_VIA"],
-    "nro":dato[0]["NROS_MUNI"]}
+    "nro":dato[0]["NROS_MUNI"],
+    "cod":dato[0]["COD_CONTRIBUYENTE"],
+    "contri":dato[0]["ID_LOTE"]}
     """ubi = dato[0]["NOM_HAB_URBA"], dato[0]["MZNA_MUNI"], dato[0]["LOTE_MUNI"], dato[0]["TIP_VIA"], \
           dato[0]["NOM_VIA"], dato[0]["NROS_MUNI"]"""
     return ubi
 
-
+"""def pisos(dato):
+    nro_pisos = [None] * dato.count()
+    aux = dato[0]["NRO_PISO"], dato[0]["CONSTRUCCIONES_1_AREA_VERIFICADA"],dato[0]["FICHAS_INDIVIDUALES_AREA_VERIFICADA"], dato[0]["ESTRU_MURO_COL"], dato[0]["ESTRU_TECHO"], \
+              dato[0]["ACABA_PISO"], dato[0]["ACABA_PUERTA_VEN"], dato[0]["ACABA_REVEST"], dato[0]["ACABA_BANO"], dato[0][
+            "INST_ELECT_SANITA"]
+    aux = list(aux)
+    conta = 0
+    nro_pisos.append(aux)
+    #nro_pisos[conta].append(aux)
+    for pis in dato:
+        nuevo = pis["NRO_PISO"], pis["CONSTRUCCIONES_1_AREA_VERIFICADA"],pis["FICHAS_INDIVIDUALES_AREA_VERIFICADA"], pis["ESTRU_MURO_COL"], pis["ESTRU_TECHO"], \
+              pis["ACABA_PISO"], pis["ACABA_PUERTA_VEN"], pis["ACABA_REVEST"], pis["ACABA_BANO"], pis[
+            "INST_ELECT_SANITA"]
+        nuevo = list(nuevo)
+        if aux in nro_pisos:
+            aux = nuevo
+        else:
+            nro_pisos.append(aux)
+        #nro_pisos[conta] = aux
+        #print nro_pisos[conta]
+        conta += 1
+    #nro_pisos.sort()
+    print nro_pisos
+    return nro_pisos"""
 def pisos(dato):
     nro_pisos = [None] * dato.count()
     aux = []
     conta = 0
+
     for pis in dato:
         aux = pis["NRO_PISO"], pis["CONSTRUCCIONES_1_AREA_VERIFICADA"],pis["FICHAS_INDIVIDUALES_AREA_VERIFICADA"], pis["ESTRU_MURO_COL"], pis["ESTRU_TECHO"], \
               pis["ACABA_PISO"], pis["ACABA_PUERTA_VEN"], pis["ACABA_REVEST"], pis["ACABA_BANO"], pis[
             "INST_ELECT_SANITA"]
         aux = list(aux)
         nro_pisos[conta] = aux
-        #print nro_pisos[conta]
+        # print nro_pisos[conta]
         conta += 1
     nro_pisos.sort()
     return nro_pisos
@@ -191,7 +295,7 @@ def server_static(filename):
 
 connection_string = "mongodb://localhost"
 connection = pymongo.MongoClient(connection_string)
-database = connection.rentas
+database = connection.catastro
 
 busca = buscar.Buscar(database)
 
